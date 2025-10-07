@@ -1,5 +1,7 @@
 # Verkle Trie (VT) Implementation
 
+<img width="1792" height="613" alt="image" src="https://github.com/user-attachments/assets/975b155c-0825-43a3-8f8c-7bb9cc7fa1a9" />
+
 ## 📚 Introduction to Verkle Tries
 
 **Verkle** is an amalgamation of "**vector**" and "**Merkle**", representing an advanced data structure that combines the tree-like organization of Merkle trees with efficient vector commitments.
