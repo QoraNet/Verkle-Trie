@@ -1,4 +1,47 @@
-# Verkle Trie (VT) Implementation - TESTING
+# Verkle Trie (VT) Implementation
+
+## 📚 Introduction to Verkle Tries
+
+**Verkle** is an amalgamation of "**vector**" and "**Merkle**", representing an advanced data structure that combines the tree-like organization of Merkle trees with efficient vector commitments.
+
+### How Verkle Tries Work
+
+Traditional Merkle trees store a hash of the `d` nodes below at each level (where `d=2` for binary Merkle trees). Verkle tries, however, commit to the `d` nodes below using a **vector commitment** instead of simple hashing.
+
+### Why Traditional d-ary Merkle Trees Are Inefficient
+
+In a `d`-ary Merkle tree, each proof must include all unaccessed siblings for each node on the path to a leaf. This means:
+
+- A `d`-ary Merkle tree needs **(d-1) × log_d(n) = (d-1) × log(n) / log(d)** hashes for a single proof
+- This is **worse** than binary Merkle trees, which only need **log(n)** hashes
+- The inefficiency stems from hash functions being poor vector commitments—proofs require all siblings to be provided
+
+### The Verkle Advantage
+
+Better vector commitments change this equation fundamentally:
+
+- **KZG polynomial commitment scheme** is used as the vector commitment
+- Each level requires only a **constant-size proof**
+- The annoying factor of **(d-1)** that kills `d`-ary Merkle trees **disappears**
+- Proofs remain compact even with high branching factors
+
+### Structure
+
+A Verkle trie is a trie where:
+- **Inner nodes** are `d`-ary vector commitments to their children
+- The **i-th child** contains all nodes with the prefix `i` as a `d`-digit binary number
+- Common implementations use `d=256` (one byte per level)
+
+**Example:** A `d=16` Verkle trie efficiently stores keys by grouping them into 16-way branches at each level, with cryptographic commitments ensuring integrity without requiring all sibling hashes in proofs.
+
+### Benefits Over Merkle Patricia Tries (MPT)
+
+1. **Smaller proofs** - Constant size per level vs. linear in siblings
+2. **Efficient state synchronization** - Compact witness proofs
+3. **Better performance** - Fewer hashing operations for verification
+4. **Future-proof** - Designed for stateless clients and light nodes
+
+---
 
 ## ✅ Production Readiness Status: **PRODUCTION READY**
 
